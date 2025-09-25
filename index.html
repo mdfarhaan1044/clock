@@ -1,43 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script src="https://cdn.tailwindcss.com"></script>
   <title>Clock</title>
   <style>
-    .scrollbar-hide::-webkit-scrollbar {
-      display: none;
-      /* Chrome, Safari, Edge */
-    }
-
-    .scrollbar-hide {
-      -ms-overflow-style: none;
-      /* IE/Edge */
-      scrollbar-width: none;
-      /* Firefox */
-    }
+    /* hide scrollbar but keep scrolling */
+    .scrollbar-hide::-webkit-scrollbar { display: none; }
+    .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
   </style>
 </head>
+<body class="bg-gradient-to-br from-gray-900 to-gray-800 text-white min-h-screen flex flex-col items-center justify-start p-4 font-sans overflow-y-auto scrollbar-hide"
+      style="padding-bottom: env(safe-area-inset-bottom);">
 
-<body
-  class="bg-gradient-to-br from-gray-900 to-gray-800 text-white min-h-screen flex flex-col items-center justify-center p-4 font-sans overflow-y-scroll scrollbar-hide h-64">
   <!-- Main Container -->
   <div class="w-full max-w-5xl bg-gray-800/50 backdrop-blur-md rounded-2xl shadow-xl p-6">
     <!-- Top Section: Stopwatch, Current Time, World Clock -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
       <!-- Stopwatch -->
       <div class="flex flex-col items-center bg-gray-700/50 rounded-xl p-6">
-        <h2 class="text-xl font-semibold mb-4">Stopwatch</h2>
-        <p id="stopwatchTime" class="text-4xl font-mono mb-4"></p>
+        <h2 class="text-lg md:text-xl font-semibold mb-4">Stopwatch</h2>
+        <p id="stopwatchTime" class="text-3xl md:text-4xl font-mono mb-4"></p>
         <div class="flex gap-3">
-          <button id="startStop"
-            class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg transition-transform transform hover:scale-105">
+          <button id="startStop" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg transition-transform transform hover:scale-105">
             Start
           </button>
-          <button id="reset"
-            class="px-4 py-2 bg-red-600 hover:bg-red-700 rounded-lg transition-transform transform hover:scale-105">
+          <button id="reset" class="px-4 py-2 bg-red-600 hover:bg-red-700 rounded-lg transition-transform transform hover:scale-105">
             Reset
           </button>
         </div>
@@ -45,18 +34,17 @@
 
       <!-- Current Time -->
       <div class="flex flex-col items-center bg-gray-700/50 rounded-xl p-6">
-        <h2 class="text-xl font-semibold mb-4">Current Time</h2>
-        <p id="currentTime" class="text-5xl font-mono"></p>
+        <h2 class="text-lg md:text-xl font-semibold mb-4">Current Time</h2>
+        <p id="currentTime" class="text-3xl md:text-5xl font-mono text-center"></p>
       </div>
 
       <!-- World Clock -->
       <div class="flex flex-col items-center bg-gray-700/50 rounded-xl p-6">
-        <h2 class="text-xl font-semibold mb-4">World Clock</h2>
-        <select id="timezone-select"
-          class="p-2 bg-gray-600 rounded-lg text-white w-full max-w-xs mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <h2 class="text-lg md:text-xl font-semibold mb-4">World Clock</h2>
+        <select id="timezone-select" class="p-2 bg-gray-600 rounded-lg text-white w-full max-w-xs mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500">
           <option value="">Select Timezone</option>
         </select>
-        <p id="world-time" class="text-2xl font-mono"></p>
+        <p id="world-time" class="text-xl md:text-2xl font-mono text-center"></p>
       </div>
     </div>
 
@@ -64,27 +52,25 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-gray-700/50 rounded-xl p-6">
       <!-- Clock Icon -->
       <div class="flex justify-center items-center">
-        <img id="icon" src="circular-alarm-clock-tool.png" alt="clock" class="w-32 h-32 object-contain" />
+        <!-- responsive image sizes -->
+        <img id="icon" src="circular-alarm-clock-tool.png" alt="clock" class="w-20 md:w-32 h-auto object-contain" />
       </div>
 
       <!-- Alarm Controls -->
       <div class="flex flex-col items-center">
-        <h2 class="text-xl font-semibold mb-4">Set Alarm</h2>
+        <h2 class="text-lg md:text-xl font-semibold mb-4">Set Alarm</h2>
         <div class="flex flex-col gap-4 w-full max-w-md">
-          <input id="alarmTime" type="time"
-            class="p-3 bg-gray-600 rounded-lg text-white w-full focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          <input id="alarmTime" type="time" class="p-3 bg-gray-600 rounded-lg text-white w-full focus:outline-none focus:ring-2 focus:ring-blue-500" />
           <label class="flex items-center gap-2">
             <span>Ringtone:</span>
-            <input type="file" id="music" class="p-3 bg-gray-600 rounded-lg text-white w-full" />
+            <input type="file" id="music" class="p-2 bg-gray-600 rounded-lg text-white w-full" />
           </label>
-          <p id="alarmMessage" class="text-center text-lg"></p>
+          <p id="alarmMessage" class="text-center text-base"></p>
           <div class="flex gap-3">
-            <button id="setAlarm"
-              class="px-4 py-2 bg-green-600 hover:bg-green-700 rounded-lg transition-transform transform hover:scale-105">
+            <button id="setAlarm" class="px-4 py-2 bg-green-600 hover:bg-green-700 rounded-lg transition-transform transform hover:scale-105">
               Set Alarm
             </button>
-            <button id="stopAlarm"
-              class="px-4 py-2 bg-red-600 hover:bg-red-700 rounded-lg transition-transform transform hover:scale-105">
+            <button id="stopAlarm" class="px-4 py-2 bg-red-600 hover:bg-red-700 rounded-lg transition-transform transform hover:scale-105">
               Stop Alarm
             </button>
           </div>
@@ -93,14 +79,13 @@
     </div>
   </div>
 
+  <footer class="mt-6 text-center text-sm text-gray-400">
+    <p>© 2025 Clock. All rights reserved By Farhaan</p>
+  </footer>
+
   <!-- Scripts -->
   <script type="module" src="time.js"></script>
   <script src="world-clock.js"></script>
   <script src="stop-watch.js"></script>
-
-  <footer>
-    <p>© 2025 Clock. All rights reserved By Farhaan</p>
-  </footer>
 </body>
-
 </html>
