@@ -3,7 +3,8 @@ const alarmMessage = document.getElementById("alarmMessage");
 const setAlarm = document.getElementById("setAlarm");
 const stopAlarm = document.getElementById("stopAlarm");
 const img = document.getElementById("icon");
-const audio = document.getElementById("music"); // file input
+const audio = document.getElementById("music");
+
 
 let alarmTimeValue = null;
 let music = null; 
