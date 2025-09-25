@@ -6,9 +6,10 @@ const img = document.getElementById("icon");
 const audio = document.getElementById("music"); // file input
 
 let alarmTimeValue = null;
-let music = null;
+let music = null; 
 
 export function alarm(now) {
+    alarmTimeValue = localStorage.getItem("alarmTime");
     if (alarmTimeValue) {
         const hours = String(now.getHours()).padStart(2, "0");
         const minutes = String(now.getMinutes()).padStart(2, "0");
@@ -19,6 +20,11 @@ export function alarm(now) {
             img.src = "alarm-clock.png";
             if (music) {
                 music.play();
+                music.loop = true;
+            } else {
+                music = new Audio("tuesday.mp3");
+                music.play();
+                music.loop = true;
             }
         }
     }
@@ -30,23 +36,25 @@ setAlarm.addEventListener("click", () => {
         music.pause();
         music.currentTime = 0;
         music = null;
+        alarmTimeValue = null;
+        localStorage.removeItem("alarmTime");
     }
 
     const file = audio.files[0]; // get uploaded file
     if (!file) {
-        alarmMessage.innerHTML = "Please upload an alarm sound.";
-        return;
+        alarmMessage.innerHTML = "Default alarm sound will be used.";
+        music = new Audio("tuesday.mp3");
+    } else {
+        const objectUrl = URL.createObjectURL(file);
+        music = new Audio(objectUrl);
     }
 
     alarmTimeValue = alarmTime.value;
+    localStorage.setItem("alarmTime", alarmTimeValue);
     if (!alarmTimeValue) {
         alarmMessage.innerHTML = "Please enter a valid time.";
         return;
     }
-
-    const objectUrl = URL.createObjectURL(file);
-    music = new Audio(objectUrl);
-
     alarmMessage.innerHTML = `Alarm set for ${alarmTimeValue}`;
     img.src = "circular-alarm-clock-tool.png";
 });
@@ -57,7 +65,7 @@ stopAlarm.addEventListener("click", () => {
         music.currentTime = 0;
         music = null;
         alarmTimeValue = null;
-
+        localStorage.removeItem("alarmTime");
         alarmMessage.innerHTML = "Alarm Stopped";
         img.src = "circular-alarm-clock-tool.png";
     } else {
