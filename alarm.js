@@ -4,10 +4,15 @@ const setAlarm = document.getElementById("setAlarm");
 const stopAlarm = document.getElementById("stopAlarm");
 const img = document.getElementById("icon");
 const audio = document.getElementById("music");
+const musicBtn = document.getElementById("musicBtn");
 
 
 let alarmTimeValue = null;
 let music = null; 
+
+musicBtn.addEventListener("click", () => {
+    audio.click();
+});
 
 export function alarm(now) {
     alarmTimeValue = localStorage.getItem("alarmTime");
@@ -22,7 +27,8 @@ export function alarm(now) {
             if (music) {
                 music.play();
                 music.loop = true;
-            } else {
+            } 
+            else {
                 music = new Audio("tuesday.mp3");
                 music.play();
                 music.loop = true;
